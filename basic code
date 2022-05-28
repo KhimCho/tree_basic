@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct bst
+{
+	int data;
+	bst * left, *right;
+	bst() : left(NULL), right(NULL) {};
+	bst(int value) : data(value), left(NULL), right(NULL) {};
+};
+
+bst* newNode(int value)
+{
+	bst* res = new bst(value);
+	return res;
+}
+bst* insert(bst* root, int value)
+{
+	if (root == NULL)
+		return newNode(value);
+	else
+	{
+		if (root->data > value)
+			root->left = insert(root->left, value);
+		else
+			root->right = insert(root->right, value);
+	}
+	return root;
+}
+
+
+void printAscendingOrder(bst* root)
+{
+	if (!root)
+		return;
+	else
+	{
+		printAscendingOrder(root->left);
+		cout << root->data << endl;
+		printAscendingOrder(root->right);
+	}
+}
+
+void printDescendingOrder(bst* root)
+{
+	if (!root)
+		return;
+	else
+	{
+		printDescendingOrder(root->right);
+		cout << root->data << endl;
+		printDescendingOrder(root->left);
+	}
+}
+
+int main()
+{
+	bst* tree = NULL, node;
+	
+	int temp;
+	cin >> temp;
+	if (temp < 0)
+		;
+	else
+	{
+		tree = newNode(temp);
+		while (true)
+		{
+			cin >> temp;
+			if (temp < 0)
+				break;
+			else
+			{
+				insert(tree, temp);
+			}
+		}
+	}
+	if (tree)
+	{
+		printAscendingOrder(tree);
+		cout << endl;
+		printDescendingOrder(tree);
+	}
+}
+
+
